@@ -10,6 +10,14 @@ Since this is mostly a proof of concept I recognize that the code is at a profes
 
 I am open to all kinds of constructive criticism.
 
+###TODO:
+* Create an icon for the wallpaper
+* Clean up code
+* Investigate how to make 
+* Parse the JSON on a separate thread
+* Find a way to have the initial image be random
+* Test with devices other than my Note4
+
 ###Special thanks to:
 * Ashraff Hathibelagal for the article on how to write a live wallpaper
   * http://code.tutsplus.com/tutorials/create-a-live-wallpaper-on-android-using-an-animated-gif--cms-23088
