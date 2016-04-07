@@ -10,8 +10,8 @@ Since this is mostly a proof of concept I recognize that the code is at a profes
 
 I am open to all kinds of constructive criticism.
 
-Special thanks to:
- Ashraff Hathibelagal for the article on how to write a live wallpaper
-      http://code.tutsplus.com/tutorials/create-a-live-wallpaper-on-android-using-an-animated-gif--cms-23088
-  The Hearthhead team for the gifs
-  The team behind HearthstoneJSON.com for providing a wonderful JSON with card id's
+###Special thanks to:
+* Ashraff Hathibelagal for the article on how to write a live wallpaper
+  * http://code.tutsplus.com/tutorials/create-a-live-wallpaper-on-android-using-an-animated-gif--cms-23088
+* The Hearthhead team for the gifs
+* The team behind HearthstoneJSON.com for providing a wonderful JSON with card id's
