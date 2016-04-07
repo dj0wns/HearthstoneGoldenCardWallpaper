@@ -99,6 +99,11 @@ public class GIFWallpaperService extends WallpaperService {
 
         private void draw() {
             if (visible) {
+                try {
+                    Thread.sleep(50);
+                } catch (Exception e) {
+                    Log.d("Sleep failed","----");
+                }
                 Canvas canvas = holder.lockCanvas();
                 canvas.save();
                 canvas.drawColor(Color.BLACK);
