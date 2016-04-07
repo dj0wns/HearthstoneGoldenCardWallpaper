@@ -2,7 +2,7 @@
 
 A Live wallpaper for Android devices which shows Golden Hearthstone Cards
 
-Currently set to download a random hearthstone card gif from hearthhead every hour and setting it as the background image.
+Currently set to download a random hearthstone card gif from hearthhead every 2 hours and setting it as the background image.
 
 Averages around 1mb every 2 hours or 1gb every 85 days (assuming a phone is open to the home screen for 85 days straight).
 
