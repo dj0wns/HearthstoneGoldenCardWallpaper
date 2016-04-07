@@ -8,7 +8,7 @@
         <service
             android:name=".GIFWallpaperService"
             android:enabled="true"
-            android:label="GIF Wallpaper"
+            android:label="Golden Cards"
             android:permission="android.permission.BIND_WALLPAPER" >
             <intent-filter>
                 <action android:name="android.service.wallpaper.WallpaperService"/>
