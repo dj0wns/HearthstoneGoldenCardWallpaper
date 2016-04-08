@@ -6,14 +6,16 @@ Currently set to download a random hearthstone card gif from hearthhead every 2 
 
 Averages around 1mb every 2 hours or 1gb every 85 days (assuming a phone is open to the home screen for 85 days straight).
 
-Since this is mostly a proof of concept I recognize that the code is at a professional standard and plan on tidying everything up in the coming weeks.
+There are now settings to change the refresh rate and frame.
+
+Since this is mostly a proof of concept I recognize that the code is not currently at a professional standard and plan on tidying everything up in the coming weeks.
 
 I am open to all kinds of constructive criticism.
 
 ###TODO:
 * Create an icon for the wallpaper
 * Clean up code
-* Investigate how to make 
+* Add additional settings toggles 
 * Parse the JSON on a separate thread
 * Find a way to have the initial image be random
 * Test with devices other than my Note4
