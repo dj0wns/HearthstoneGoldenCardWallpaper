@@ -1,6 +1,7 @@
 package com.dj0wns.goldencards.hearthstonegoldencardwallpaper;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -9,6 +10,7 @@ import android.graphics.Movie;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.service.wallpaper.WallpaperService;
 import android.util.DisplayMetrics;
 import android.util.JsonReader;
@@ -30,7 +32,7 @@ import java.util.Random;
  * Created by dj0wns on 3/18/16.
 */
 
-public class GIFWallpaperService extends WallpaperService {
+public class GIFWallpaperService extends WallpaperService{
 
     String url = "http://wow.zamimg" +
                ".com/images/hearthstone/cards/enus/animated/CS2_141_premium.gif";
@@ -39,15 +41,26 @@ public class GIFWallpaperService extends WallpaperService {
     ArrayList<String> cardList = new ArrayList<String>();
     Random generator = new Random();
     Resources res;
-    long delay = 1000 * 60 * 120;
+    static long delay;
+    static int sleep;
+    static int downloadFailDelay;
+    int totalSleep = 0;
     long startTime = 0;
     DisplayMetrics metrics = new DisplayMetrics();
     float height, width;
+    SharedPreferences prefs;
+
 
 
 
     @Override
     public WallpaperService.Engine onCreateEngine() {
+        prefs = PreferenceManager.getDefaultSharedPreferences
+                (getApplicationContext());
+        delay = Long.decode(prefs.getString("update_frequency", "120")) * 1000 * 60;
+        sleep = 1000/Integer.decode(prefs.getString("framerate", "20"));
+        downloadFailDelay = Integer.decode(prefs.getString("fail_delay", "30")) *
+                1000;
         res= getResources();
         ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
                 .getDefaultDisplay().getMetrics(metrics);
@@ -100,36 +113,42 @@ public class GIFWallpaperService extends WallpaperService {
         private void draw() {
             if (visible) {
                 try {
-                    Thread.sleep(50);
+                    Thread.sleep(sleep);
+                    totalSleep ++;
                 } catch (Exception e) {
-                    Log.d("Sleep failed","----");
+                    Log.d("Sleep failed",e.toString());
                 }
-                Canvas canvas = holder.lockCanvas();
-                canvas.save();
-                canvas.drawColor(Color.BLACK);
-                widthScale = width / movie.width();
-                heightScale = height / movie.height();
-                scale = widthScale < heightScale ? widthScale : heightScale;
-                canvas.scale(scale, scale);
+                try {
+                    Canvas canvas = holder.lockCanvas();
+                    canvas.save();
+                    canvas.drawColor(Color.BLACK);
+                    widthScale = width / movie.width();
+                    heightScale = height / movie.height();
+                    scale = widthScale < heightScale ? widthScale : heightScale;
+                    canvas.scale(scale, scale);
 
-                movie.draw(canvas, 0, 0);
-                canvas.restore();
-                holder.unlockCanvasAndPost(canvas);
-                movie.setTime((int) (System.currentTimeMillis() % movie.duration()));
+                    movie.draw(canvas, 0, 0);
+                    canvas.restore();
+                    holder.unlockCanvasAndPost(canvas);
+                    movie.setTime((totalSleep % (movie
+                            .duration()/100))*100);
 
-                handler.removeCallbacks(drawGIF);
-                handler.postDelayed(drawGIF, frameDuration);
-                if(System.currentTimeMillis() - delay > startTime) {
-                    if (nextFlag == true && next != null) {
-                        movie = next;
-                        nextFlag = false;
-                        downloadTask = new DownloadGIFTask().execute();
-                        startTime = System.currentTimeMillis();
-                    } else if (nextFlag == true && next == null) {
-                        nextFlag = false;
-                        downloadTask = new DownloadGIFTask().execute();
-                        startTime += 30000; //wait 30 seconds before trying again
+                    handler.removeCallbacks(drawGIF);
+                    handler.postDelayed(drawGIF, frameDuration);
+                    if (System.currentTimeMillis() - delay > startTime) {
+                        if (nextFlag == true && next != null) {
+                            movie = next;
+                            nextFlag = false;
+                            downloadTask = new DownloadGIFTask().execute();
+                            startTime = System.currentTimeMillis();
+                        } else if (nextFlag == true && next == null) {
+                            nextFlag = false;
+                            downloadTask = new DownloadGIFTask().execute();
+                            startTime += downloadFailDelay; //wait 30 seconds before trying again
+                        }
                     }
+                } catch (Exception e){
+                    Log.e("",e.toString());
                 }
             }
         }
@@ -160,8 +179,8 @@ public class GIFWallpaperService extends WallpaperService {
               next = null;
               int card = generator.nextInt() % cardList.size();
 
-              String url = res.getString(R.string.image_url_base) + cardList.get
-                      (card) + res.getString(R.string.image_url_end);
+              String url = res.getString(R.string.image_url_base) +"enus" + res
+                      .getString(R.string.image_url_middle)+ cardList.get(card) + res.getString(R.string.image_url_end);
               Log.d("URL", url);
               InputStream is = (InputStream) new URL(url).getContent();
               next = Movie.decodeStream(is);

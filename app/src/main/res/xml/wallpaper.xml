@@ -2,5 +2,6 @@
 <wallpaper
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:label="Hearthstone Golden Wallpaper"
-    android:thumbnail="@mipmap/ic_launcher">
+    android:thumbnail="@mipmap/ic_launcher"
+    android:settingsActivity="com.dj0wns.goldencards.hearthstonegoldencardwallpaper.SettingsActivity">
 </wallpaper>

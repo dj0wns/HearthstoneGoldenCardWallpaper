@@ -1,0 +1,21 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/settings"
+        android:key = "general_settings">
+
+        <ListPreference
+            android:key="framerate"
+            android:entries="@array/framerates"
+            android:entryValues="@array/framerates"
+            android:summary="%s"
+            android:title="@string/framerate"
+            android:defaultValue="12"/>
+        <ListPreference
+            android:key="update_frequency"
+            android:entries="@array/frequency"
+            android:entryValues="@array/frequency_values"
+            android:summary="%s"
+            android:title="@string/frequency_string"
+            android:defaultValue="120"/>
+    </PreferenceCategory>
+</PreferenceScreen>
